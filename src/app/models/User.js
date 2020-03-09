@@ -21,6 +21,11 @@ const UserSchema = new mongoose.Schema({
         required: false, 
         type: Number
     },
+    installations: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Installation',
+        default: 0
+    },
     password: {
         type: String, 
         required: true, 

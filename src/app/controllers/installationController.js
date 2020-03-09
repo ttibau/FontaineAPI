@@ -6,7 +6,6 @@ const Installation = require('../models/Installation')
 router.use(authMiddleware)
 
 router.get('/', async (req, res) => {
-    console.log('asdasdkalksd')
     try {
         const instalations = await Installation.find().populate('user').populate('product')
         return res.send({ instalations })
@@ -39,7 +38,6 @@ router.post('/', async (req, res) => {
         return res.send({ instalation })
 
     } catch (error) {
-        console.log(error)
         res.status(400).send({ error: 'Erro ao criar nova instalacao'})
     }
 })
@@ -52,7 +50,6 @@ router.put('/:instalationId', async (req, res) => {
         return res.send({ instalation })
 
     } catch (error) {
-        console.log(error)
         res.status(400).send({ error: 'Erro ao criar nova instalacao'})
     }
 })
