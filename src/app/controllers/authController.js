@@ -1,5 +1,6 @@
 const express = require('express')
 const User = require('../models/User')
+const Installation = require('../models/Installation')
 const bcrypt = require('bcryptjs')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
@@ -45,12 +46,14 @@ router.post('/authenticate', async (req, res) => {
     if(!await bcrypt.compare(password, user.password))
         return res.status(400).send({ error: 'Senha inválida'})
 
+    
+    const installationsCount = await Installation.find({ user: user.id })
     user.password = undefined
 
     // Your Hash: d3c2b218a2379106bd2763ff959fba9e
     // Your String: AndreSoCriaBatata
 
-    res.send({ user, token: generateToken({id: user.id}) }) 
+    res.send({ user, token: generateToken({id: user.id}), installationsCount: installationsCount.length }) 
 
 })
 

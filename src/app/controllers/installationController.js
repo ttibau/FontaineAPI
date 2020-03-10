@@ -34,6 +34,10 @@ router.get('/:instalationId', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
+        const alreadyHaveInstallationCode = await Installation.findOne({ code: req.body.code })
+        if(alreadyHaveInstallationCode)
+            return res.status(400).send({ error: 'O código informado já existe '})
+
         const instalation = await Installation.create({ ...req.body, user: req.userId, product: req.body.productId })
         return res.send({ instalation })
 
